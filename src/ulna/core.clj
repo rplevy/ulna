@@ -12,5 +12,5 @@
 
 (defonce fb-auth {:access-token (:fb-auth config)})
 
-(with-facebook-auth fb-auth
+#_(with-facebook-auth fb-auth
   (client/get "https://graph.facebook.com/me/friends"))

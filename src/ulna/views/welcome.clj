@@ -1,6 +1,7 @@
 (ns ulna.views.welcome
   (:use [noir.core]
         [hiccup.core]
+        [hiccup.page-helpers :only [include-css html5]]
         [ulna.core])
   (:require [ulna.views.common :as common]))
 
