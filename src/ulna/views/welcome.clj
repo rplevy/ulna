@@ -17,3 +17,6 @@
 (defpage "/" []
          (main
            [:p "Welcome to ulna"]))
+
+(defpage [:post "/"] [& args]  ;; see what post is being sent
+  args)
