@@ -6,7 +6,7 @@ Publicize what you are listening to.
 # configuration
 
 Create a file bin/env.sh (in .gitignore so as not to push) based on
-the example in bin/ to set environment vars fo app secret, etc.
+the example in bin/ to set environment vars for app secret, etc.
 
 ## License
 ==========
