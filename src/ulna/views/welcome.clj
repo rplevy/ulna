@@ -33,15 +33,15 @@
                 js.src = \"//connect.facebook.net/en_US/all.js\";
                 d.getElementsByTagName('head')[0].appendChild(js);
                 }(document));" app-id)]
-     [:a {:href
-          (format "https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s/auth-code"
-                  (:apikey ulna.core/config)
-                  (:baseuri ulna.core/config))}
-      [:img {:src "/img/tfr.png"}]]
+     [:img {:src "/img/tfr.png"}]
      [:p]
      [:center
-      [:div {:class "fb-login-button"}
-      "Login with Facebook"]]]]])
+      [:a {:href
+           (format "https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s/auth-code"
+                   (:apikey ulna.core/config)
+                   (:baseuri ulna.core/config))}
+       [:div {:class "fb-login-button"}
+        "Login with Facebook"]]]]]])
 
 (defpage "/auth-code" {code :code}
   (session/put! :access-token (ulna.core/request-access-token code))
