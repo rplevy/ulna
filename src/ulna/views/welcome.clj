@@ -3,10 +3,13 @@
         [hiccup.core]
         [ulna.core])
   (:require [ulna.views.common :as common]
-            [noir [response :as response]
+            [noir
+             [response :as response]
              [session :as session]
              [server :as server]]
-            [hiccup.page-helpers :as hph]))
+            [hiccup
+             [page-helpers :as hph]
+             [form-helpers :as hfh]]))
 
 (defpartial login [app-id title]
   [:html
@@ -25,6 +28,25 @@
                    (:baseuri ulna.core/config))}
        [:img {:src "/img/fb-button.png"}]]]]]])
 
+(defpartial home [title]
+  [:html
+   [:head
+    (hph/include-css "/css/welcome.css")
+    [:title title]]
+   [:body
+    [:div {:class "main-div"}
+    [:div {:id "fb-root"}]
+     [:img {:src "/img/tfr.png"}]
+     [:center
+      [:div {:class "question"} "What are you listening to?"]
+      (hfh/form-to
+       [:post "/home"]
+       [:div {:class "space"}
+        [:input {:type "text" :name "listening-to" :id "listening-to"
+                 :value nil :alt "Listening to..." :class "tf"}]]
+       [:div {:class "space"}
+        [:input {:type "submit" :value "OK" :class "submit"}]])]]]])
+      
 (defn authenticated []
   (response/redirect (str (:baseuri ulna.core/config) "/home")))
   
@@ -39,10 +61,8 @@
   (authenticated))
 
 (defpage "/home" []
-  (html [:html [:h1 "this is where you do things after authenticating"]
-         (ulna.core/friends (session/get :access-token))]))
-
-(comment
-  ;; inspect what was posted
-  (defpage [:post "/"] [& args]
-    args))
+  (home (:title ulna.core/config)))
+  
+(defpage [:post "/home"] {song :song artist :artist}
+  (ulna.core/listening-to (session/get :access-token) song artist)
+  (home (:title ulna.core/config)))

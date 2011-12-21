@@ -1,8 +1,31 @@
 body {background-color:#E5FB71;}
 
 .main-div {
-  width: 600px ;
-  margin-left: auto ;
-  margin-right: auto ;
-  padding: 50;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px;
+}
+
+.question {
+    font: bold 18px Helvetica Neue,Helvetica,sans-serif;
+    padding: 20px;
+}
+
+.tf {
+    width:400px;
+    height:40px;
+    font-size: 30px;
+    color: #c4ff00;
+}
+
+.space {
+    padding: 10px
+}
+
+.submit {
+    height: 60px;
+    width: 75px;
+    font-size: 20px;
+    background-color: #c4c700;
 }
