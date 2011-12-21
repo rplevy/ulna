@@ -37,3 +37,9 @@
 (defn friends [auth]
   (auth/with-facebook-auth {:access-token auth}
     (client/get "https://graph.facebook.com/me/friends")))
+
+(defn not-expired [auth]
+  (when auth
+    (auth/with-facebook-auth {:access-token auth}
+      (client/get (format "https://graph.facebook.com/%s"
+                          (:testuser config))))))

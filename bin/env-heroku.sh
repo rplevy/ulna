@@ -6,4 +6,5 @@ heroku config:add \
     appsecret="$appsecret" \
     apikey="$apikey" \
     title="$title" \
-    baseuri="$baseuri"
+    baseuri="$baseuri" \
+    testuser="$testuser"

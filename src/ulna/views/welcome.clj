@@ -25,17 +25,22 @@
                    (:baseuri ulna.core/config))}
        [:img {:src "/img/fb-button.png"}]]]]]])
 
+(defn authenticated []
+  (response/redirect (str (:baseuri ulna.core/config) "/home")))
+  
 (defpage "/" []
-  (login (:apikey ulna.core/config)
-         (:title ulna.core/config)))
+  (if (ulna.core/not-expired (session/get :access-token))
+    (authenticated)
+    (login (:apikey ulna.core/config)
+           (:title ulna.core/config))))
 
 (defpage "/auth-code" {code :code}
   (session/put! :access-token (ulna.core/request-access-token code))
-  (response/redirect (str (:baseuri ulna.core/config) "/home")))
+  (authenticated))
 
 (defpage "/home" []
-  (html [:html [:h1 "TODO: this is where you do things after authenticating"
-                (ulna.core/friends (session/get :access-token))]]))
+  (html [:html [:h1 "this is where you do things after authenticating"]
+         (ulna.core/friends (session/get :access-token))]))
 
 (comment
   ;; inspect what was posted
