@@ -1,5 +1,6 @@
 (ns ulna.server
-  (:require [noir.server :as server]))
+  (:require [noir [server :as server]
+             [session :as session]]))
 
 (server/load-views "src/ulna/views/")
 
@@ -8,4 +9,3 @@
         port (Integer. (get (System/getenv) "PORT" "8080"))]
     (server/start port {:mode mode
                         :ns 'ulna})))
-
