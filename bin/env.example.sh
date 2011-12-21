@@ -8,8 +8,8 @@ export \
     title="Radio Ulna"
 
 heroku config:add \
-    appsecret=$appsecret \
-    apikey=$apikey \
-    title=$title
+    appsecret="$appsecret" \
+    apikey="$apikey" \
+    title="$title"
 
 
