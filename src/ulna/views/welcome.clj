@@ -18,5 +18,9 @@
          (main
            [:p "Welcome to ulna"]))
 
-(defpage [:post "/"] [& args]  ;; see what post is being sent
-  args)
+(defpage [:post "/"] {signed-request :signed_request}
+  signed-request)
+
+(comment
+  (defpage [:post "/"] [& args]  ;; see what post is being sent
+    args))

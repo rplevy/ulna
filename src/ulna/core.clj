@@ -10,7 +10,7 @@
                  {}
                  (s/split (slurp "resources/config/env.conf") #"\n")))
 
-(defonce fb-auth {:access-token (:fb-auth config)})
+(defonce app-secret {:access-token (:app-secret config)})
 
-#_(with-facebook-auth fb-auth
+#_(with-facebook-auth app-secret
   (client/get "https://graph.facebook.com/me/friends"))
