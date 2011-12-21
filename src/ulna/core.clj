@@ -2,7 +2,6 @@
   (:require [clj-facebook-graph [client :as client]]
             [clojure.string :as s]
             [clj-facebook-graph.auth :as auth]
-            [clj-http.client :as http]
             [clojure.tools.logging :as log]))
 
 (defn- env-vars []
