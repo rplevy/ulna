@@ -7,4 +7,4 @@
 /.lein-failures
 /checkouts
 /.lein-deps-sum
-/resources/config/env.conf
+/resources/config/env.sh

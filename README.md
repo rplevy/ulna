@@ -5,11 +5,8 @@ Publicize what you are listening to.
 
 # configuration
 
-For heroku deployment with custom configuration, don't use the master branch for 
-development. Create an env.conf based on env.example.conf. In the master branch,
-set .gitignore to allow adding config/env.conf. Don't push master to github, just
-heroku. When pushing to heroku, merge the changes from dev into master and then
-push master.
+Create a file bin/env.sh (in .gitignore so as not to push) based on
+the example in bin/ to set environment vars fo app secret, etc.
 
 ## License
 ==========
