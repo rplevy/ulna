@@ -40,7 +40,11 @@
 
 (defn not-expired [auth]
   (when auth
-    (auth/with-facebook-auth {:access-token auth}
-      (= 200 (:status
-              (client/get
-               (format "https://graph.facebook.com/%s" (:testuser config))))))))
+    (try
+      (auth/with-facebook-auth {:access-token auth}
+        (= 200 (:status
+                (client/get
+                 (format "https://graph.facebook.com/%s" (:testuser config))))))
+      (catch Exception e
+        (log/debug (format "Failed to get test user: " (.getMessage e)))
+        nil))))
