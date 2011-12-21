@@ -1,25 +1,43 @@
 (ns ulna.views.welcome
   (:use [noir.core]
         [hiccup.core]
-        [hiccup.page-helpers :only [include-css html5]]
         [ulna.core])
   (:require [ulna.views.common :as common]))
 
-(defpartial main [& content]
-  (html5
+(defpartial login [app-id]
+  [:html
    [:head
-    [:title "ulna"]
-    (include-css "/css/reset.css")]
+    [:title "The Fucking Radio"]]
    [:body
-    [:div#wrapper
-     content]]))
+    [:div {:id "fb-root"}]
+    [:script
+     (format
+      "window.fbAsyncInit = function() {
+                                    FB.init({
+                                             appId      : '%s',
+                                             status     : true,
+                                             cookie     : true,
+                                             xfbml      : true,
+                                             oauth      : true,
+                                             });
+                                    };
+   (function(d){
+                var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+                js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = \"//connect.facebook.net/en_US/all.js\";
+                d.getElementsByTagName('head')[0].appendChild(js);
+                }(document));" app-id)]
+    [:div {:class "fb-login-button"}
+     "Login with Facebook"]]])
 
-(defpage "/" []
-         (main
-           [:p "Welcome to ulna"]))
+(defpage "/" {code :code}
+  code)
 
 (defpage [:post "/"] {signed-request :signed_request}
   signed-request)
+
+(defpage "/" []
+  (login (:apikey ulna.core/config)))
 
 (comment
   (defpage [:post "/"] [& args]  ;; see what post is being sent

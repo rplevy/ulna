@@ -10,7 +10,6 @@
 
 (defonce config (env-vars))
 
-#_(defonce fb-auth {:access-token "TODO: get oauth token"})
-
-#_(with-facebook-auth fb-auth
-  (client/get "https://graph.facebook.com/me/friends"))
+(defn friends [auth]
+  (with-facebook-auth {:access-token auth}
+    (client/get "https://graph.facebook.com/me/friends")))
