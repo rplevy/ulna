@@ -16,23 +16,6 @@
    [:body
     [:div {:class "main-div"}
     [:div {:id "fb-root"}]
-    [:script
-     (format
-      "window.fbAsyncInit = function() { FB.init({
-                                             appId      : '%s',
-                                             status     : true,
-                                             cookie     : true,
-                                             xfbml      : true,
-                                             oauth      : true,
-                                             });
-                                       };
-   (function(d){
-                var js, id = 'facebook-jssdk';
-                if (d.getElementById(id)) {return;}
-                js = d.createElement('script'); js.id = id; js.async = true;
-                js.src = \"//connect.facebook.net/en_US/all.js\";
-                d.getElementsByTagName('head')[0].appendChild(js);
-                }(document));" app-id)]
      [:img {:src "/img/tfr.png"}]
      [:p]
      [:center
@@ -40,8 +23,7 @@
            (format "https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s/auth-code"
                    (:apikey ulna.core/config)
                    (:baseuri ulna.core/config))}
-       [:div {:class "fb-login-button"}
-        "Login with Facebook"]]]]]])
+       [:img {:src "/img/fb-button.png"}]]]]]])
 
 (defpage "/auth-code" {code :code}
   (session/put! :access-token (ulna.core/request-access-token code))
