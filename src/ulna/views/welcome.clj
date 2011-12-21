@@ -3,6 +3,7 @@
         [hiccup.core]
         [ulna.core])
   (:require [ulna.views.common :as common]
+            [noir.response :as response]
             [hiccup.page-helpers :as hph]))
 
 (defpartial login [app-id title]
@@ -36,11 +37,13 @@
       [:div {:class "fb-login-button"}
       "Login with Facebook"]]]]])
 
-(defpage "/" {code :code}
-  code)
-
-(defpage [:post "/"] {signed-request :signed_request}
-  signed-request)
+(defpage "/auth-code" {code :code}
+  (response/redirect
+   (format "https://graph.facebook.com/oauth/access_token?client_id=%s&redirect_uri=%s/&client_secret=%s&code=%s"
+           (:apikey ulna.core/config)
+           (:baseuri ulna.core/config)
+           (:appsecret ulna.core/config)
+           code)))
 
 (defpage "/" []
   (login (:apikey ulna.core/config)
