@@ -39,7 +39,7 @@
 
 (defpage "/auth-code" {code :code}
   (response/redirect
-   (format "https://graph.facebook.com/oauth/access_token?client_id=%s&redirect_uri=%s/&client_secret=%s&code=%s"
+   (format "https://graph.facebook.com/oauth/access_token?client_id=%s&redirect_uri=%s/auth-code&client_secret=%s&code=%s"
            (:apikey ulna.core/config)
            (:baseuri ulna.core/config)
            (:appsecret ulna.core/config)
