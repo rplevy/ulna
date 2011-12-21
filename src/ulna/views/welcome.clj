@@ -2,13 +2,16 @@
   (:use [noir.core]
         [hiccup.core]
         [ulna.core])
-  (:require [ulna.views.common :as common]))
+  (:require [ulna.views.common :as common]
+            [hiccup.page-helpers :as hph]))
 
-(defpartial login [app-id]
+(defpartial login [app-id title]
   [:html
    [:head
-    [:title "The Fucking Radio"]]
+    (hph/include-css "/css/welcome.css")
+    [:title title]]
    [:body
+    [:div {:class "main-div"}
     [:div {:id "fb-root"}]
     [:script
      (format
@@ -27,8 +30,11 @@
                 js.src = \"//connect.facebook.net/en_US/all.js\";
                 d.getElementsByTagName('head')[0].appendChild(js);
                 }(document));" app-id)]
-    [:div {:class "fb-login-button"}
-     "Login with Facebook"]]])
+     [:img {:src "/img/tfr.png"}]
+     [:p]
+     [:center
+      [:div {:class "fb-login-button"}
+      "Login with Facebook"]]]]])
 
 (defpage "/" {code :code}
   code)
@@ -37,7 +43,8 @@
   signed-request)
 
 (defpage "/" []
-  (login (:apikey ulna.core/config)))
+  (login (:apikey ulna.core/config)
+         (:title ulna.core/config)))
 
 (comment
   (defpage [:post "/"] [& args]  ;; see what post is being sent
