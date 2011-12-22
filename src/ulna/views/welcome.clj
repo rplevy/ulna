@@ -5,7 +5,7 @@
   (:require [ulna.views.common :as common]
             [noir
              [response :as response]
-             [session :as session]
+             [cookies :as cookies]
              [server :as server]]
             [hiccup
              [page-helpers :as hph]
@@ -57,18 +57,18 @@
   (response/redirect (str (:baseuri ulna.core/config) "/home")))
   
 (defpage "/" []
-  (if (ulna.core/not-expired (session/get :access-token))
+  (if (ulna.core/not-expired (cookies/get :access-token))
     (authenticated)
     (login (:apikey ulna.core/config)
            (:title ulna.core/config))))
 
 (defpage "/auth-code" {code :code}
-  (session/put! :access-token (ulna.core/request-access-token code))
+  (cookies/put! :access-token (ulna.core/request-access-token code))
   (authenticated))
 
 (defpage "/home" []
   (home (:title ulna.core/config)))
   
 (defpage [:post "/home"] {listening :listening}
-  (ulna.core/listening-to (session/get :access-token) listening)
+  (ulna.core/listening-to (cookies/get :access-token) listening)
   (home (:title ulna.core/config) listening))
