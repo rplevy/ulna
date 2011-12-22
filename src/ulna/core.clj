@@ -52,6 +52,7 @@
   (auth/with-facebook-auth {:access-token auth}
     (client/post "https://graph.facebook.com/me/feed"
                  {:content-type "application/x-www-form-urlencoded"
-                  :body (format "message=is listening to %s on %s"
+                  :body (format "message=is listening to %s on %s&link=%s"
                                 listening
-                                (:title config))})))
+                                (:title config)
+                                (:baseuri config))})))
