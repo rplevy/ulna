@@ -3,6 +3,10 @@
 
 Publicize what you are listening to.
 
+# usage
+
+http://tfr.herokuapp.com
+
 # configuration
 
 Create a file bin/env.sh (in .gitignore so as not to push) based on
