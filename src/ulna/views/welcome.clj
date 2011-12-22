@@ -23,10 +23,7 @@
      [:img {:src "/img/tfr.png"}]
      [:p]
      [:center
-      [:a {:href
-           (format "https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s/auth-code&scope=publish_stream"
-                   (:apikey ulna.core/config)
-                   (:baseuri ulna.core/config))}
+      [:a {:href ulna.core/oauth-code-uri}
        [:img {:src "/img/fb-button.png"}]]]]]])
 
 (defpartial home [title & [listening]]
@@ -69,8 +66,22 @@
   (authenticated))
 
 (defpage "/home" []
-  (home (:title ulna.core/config)))
+  (let [post-pending (cookies/get :post-pending)]
+    (when post-pending
+      ;; if a session timed out and we saved a post in post-pending cookie,
+      ;; then we did a round trip to facebook to renew, so here we post it.
+      (ulna.core/listening-to (cookies/get :access-token) post-pending)
+      (cookies/put! :post-pending nil))
+    (home (:title ulna.core/config) post-pending)))
   
 (defpage [:post "/home"] {listening :listening}
-  (ulna.core/listening-to (cookies/get :access-token) listening)
-  (home (:title ulna.core/config) listening))
+  (if (ulna.core/not-expired (cookies/get :access-token))
+    (do
+      (ulna.core/listening-to (cookies/get :access-token) listening)
+      (home (:title ulna.core/config) listening))
+    (do
+      ;; if we have something to post but the access code expired, save the
+      ;; post in a cookie and do the the round trip to facebook to renew.
+      (cookies/put! :post-pending listening)
+      (response/redirect ulna.core/oauth-code-uri))))
+

@@ -16,5 +16,3 @@ TODO
 * Add an about page explaining what the point of this is.
 
 * Show what friends are listening to
-
-* deal with access token timeout

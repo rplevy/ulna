@@ -14,6 +14,11 @@
 
 (defonce config (env-vars))
 
+(defonce oauth-code-uri
+  (format "https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s/auth-code&scope=publish_stream"
+          (:apikey config)
+          (:baseuri config)))
+
 (defn request-access-token
   "when redirecting to an external app page, facebook provides a temporary
    auth code. This code in conjunction with the app secret, base uri, and
