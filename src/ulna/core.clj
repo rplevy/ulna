@@ -50,4 +50,7 @@
 
 (defn listening-to [auth listening]
   (auth/with-facebook-auth {:access-token auth}
-    :TODO))
+    (client/post "https://api.facebook.com/method/stream.publish"
+                 {:message (format "is listening to %s on %s"
+                                   listening
+                                   (:title config))})))
