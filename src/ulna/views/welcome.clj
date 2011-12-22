@@ -43,7 +43,7 @@
          [:div {:class "space"}
           [:div {:class "listening-now"}
            "You are listening to " listening
-           " on The Fucking Radio."]])
+           " on " title "."]])
        "What are you listening to" (when listening " now")  "?"]
       (hfh/form-to
        [:post "/home"]
