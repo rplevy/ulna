@@ -44,7 +44,7 @@
        (when listening
          [:div {:class "space"}
           [:div {:class "listening-now"}
-           "You are listening to " listening
+           "You have been listening to " listening
            " on " title "."]])
        "What are you listening to" (when listening " now")  "?"]
       (hfh/form-to

@@ -51,6 +51,7 @@
 (defn listening-to [auth listening]
   (auth/with-facebook-auth {:access-token auth}
     (client/post "https://graph.facebook.com/me/feed"
-                 {:message (format "is listening to %s on %s"
-                                   listening
-                                   (:title config))})))
+                 {:content-type "application/x-www-form-urlencoded"
+                  :body (format "message=is listening to %s on %s"
+                                listening
+                                (:title config))})))
