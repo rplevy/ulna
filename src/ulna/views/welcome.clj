@@ -67,11 +67,11 @@
 
 (defpage "/home" []
   (let [post-pending (cookies/get :post-pending)]
-    (when post-pending
+    (when (seq post-pending)
       ;; if a session timed out and we saved a post in post-pending cookie,
       ;; then we did a round trip to facebook to renew, so here we post it.
       (ulna.core/listening-to (cookies/get :access-token) post-pending)
-      (cookies/put! :post-pending nil))
+      (cookies/put! :post-pending ""))
     (home (:title ulna.core/config) post-pending)))
   
 (defpage [:post "/home"] {listening :listening}
