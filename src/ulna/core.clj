@@ -48,6 +48,6 @@
         (log/debug (format "Failed to get test user: " (.getMessage e)))
         nil))))
 
-(defn listening-to [auth song artist]
+(defn listening-to [auth listening]
   (auth/with-facebook-auth {:access-token auth}
     :TODO))

@@ -28,7 +28,7 @@
                    (:baseuri ulna.core/config))}
        [:img {:src "/img/fb-button.png"}]]]]]])
 
-(defpartial home [title]
+(defpartial home [title & [listening]]
   [:html
    [:head
     (hph/include-css "/css/welcome.css")
@@ -38,12 +38,18 @@
     [:div {:id "fb-root"}]
      [:img {:src "/img/tfr.png"}]
      [:center
-      [:div {:class "question"} "What are you listening to?"]
+      [:div {:class "question"}
+       (when listening
+         [:div {:class "space"}
+          [:div {:class "listening-now"}
+           "You are listening to " listening
+           " on The Fucking Radio."]])
+       "What are you listening to" (when listening " now")  "?"]
       (hfh/form-to
        [:post "/home"]
        [:div {:class "space"}
-        [:input {:type "text" :name "listening-to" :id "listening-to"
-                 :value nil :alt "Listening to..." :class "tf"}]]
+        [:input {:type "text" :name "listening" :id "listening"
+                 :value nil :autocomplete "off" :class "tf"}]]
        [:div {:class "space"}
         [:input {:type "submit" :value "OK" :class "submit"}]])]]]])
       
@@ -63,6 +69,6 @@
 (defpage "/home" []
   (home (:title ulna.core/config)))
   
-(defpage [:post "/home"] {song :song artist :artist}
-  (ulna.core/listening-to (session/get :access-token) song artist)
-  (home (:title ulna.core/config)))
+(defpage [:post "/home"] {listening :listening}
+  (ulna.core/listening-to (session/get :access-token) listening)
+  (home (:title ulna.core/config) listening))
