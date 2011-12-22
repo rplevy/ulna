@@ -24,7 +24,7 @@
      [:p]
      [:center
       [:a {:href
-           (format "https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s/auth-code"
+           (format "https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s/auth-code&scope=publish_stream"
                    (:apikey ulna.core/config)
                    (:baseuri ulna.core/config))}
        [:img {:src "/img/fb-button.png"}]]]]]])
