@@ -43,16 +43,17 @@
       (auth/with-facebook-auth {:access-token auth}
         (= 200 (:status
                 (client/get
-                 (format "https://graph.facebook.com/%s" (:testuser config))))))
+                 (format "https://graph.facebook.com/me")))))
       (catch Exception e
         (log/debug (format "Failed to get test user: " (.getMessage e)))
         nil))))
 
-(defn listening-to [auth listening]
+(defn listening-to [auth listening & [link]]
   (auth/with-facebook-auth {:access-token auth}
     (client/post "https://graph.facebook.com/me/feed"
-                 {:content-type "application/x-www-form-urlencoded"
-                  :body (format "message=is listening to %s on %s&link=%s"
-                                listening
-                                (:title config)
-                                (:baseuri config))})))
+                 {:form-params
+                  {:message (format "is listening to %s on %s %s"
+                                    listening
+                                    (:title config)
+                                    (:baseuri config))
+                   :link link}})))
