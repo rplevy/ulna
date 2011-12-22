@@ -15,7 +15,8 @@
   [:html
    [:head
     (hph/include-css "/css/welcome.css")
-    [:title title]]
+    [:title title]
+    [:link {:rel "icon" :type "image/png" :href "/img/favicon.ico"}]]
    [:body
     [:div {:class "main-div"}
     [:div {:id "fb-root"}]
@@ -32,7 +33,8 @@
   [:html
    [:head
     (hph/include-css "/css/welcome.css")
-    [:title title]]
+    [:title title]
+    [:link {:rel "icon" :type "image/png" :href "/img/favicon.ico"}]]
    [:body
     [:div {:class "main-div"}
     [:div {:id "fb-root"}]
