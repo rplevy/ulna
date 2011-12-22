@@ -51,7 +51,6 @@
 (defn listening-to [auth listening]
   (auth/with-facebook-auth {:access-token auth}
     (client/post "https://graph.facebook.com/me/feed"
-                 {:message (format "is listening to %s on <a href=\"%s\">%s</a>"
+                 {:message (format "is listening to %s on %s"
                                    listening
-                                   (:baseuri config)
                                    (:title config))})))
